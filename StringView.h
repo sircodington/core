@@ -16,6 +16,10 @@ namespace core {
 class StringView
 {
 public:
+    StringView()
+        : StringView(nullptr)
+    {
+    }
     StringView(const char *data, s64 size = -1);
 
     [[nodiscard]] const char *data() const { return m_data; }
