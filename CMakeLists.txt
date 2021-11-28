@@ -6,6 +6,7 @@ set(${PROJECT_NAME}_HEADERS
     Logging.h
     StringView.h
     Either.h
+    List.h
 )
 
 set(${PROJECT_NAME}_SOURCES
