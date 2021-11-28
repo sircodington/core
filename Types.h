@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <cinttypes>
 #include <cstdint>
 
 using s8 = int8_t;
