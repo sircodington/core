@@ -17,6 +17,43 @@ namespace core {
 // @TODO: Allow inline storage
 
 template<typename T>
+class ListIterator
+{
+public:
+    explicit ListIterator(T *elem)
+        : m_elem(elem)
+    {
+    }
+
+    bool operator==(const ListIterator<T> &other) const
+    {
+        return m_elem == other.m_elem;
+    }
+    bool operator!=(const ListIterator<T> &other) const
+    {
+        return not(*this == other);
+    }
+
+    const T &operator*() const { return *m_elem; }
+    T &operator*() { return *m_elem; }
+
+    ListIterator<T> &operator++()
+    {
+        ++m_elem;
+        return *this;
+    }
+    ListIterator<T> operator++(int) const
+    {
+        ListIterator<T> iterator = *this;
+        ++(*this);
+        return iterator;
+    }
+
+private:
+    T *m_elem { nullptr };
+};
+
+template<typename T>
 class List
 {
 public:
@@ -35,8 +72,14 @@ public:
 
     void add(const T &);
     void add(T &&);
+
     const T &operator[](Index) const;
     T &operator[](Index);
+
+    auto begin() const { return ListIterator<T>(m_data); }
+    auto end() const { return ListIterator<T>(m_data + size()); }
+    auto begin() { return ListIterator<T>(m_data); }
+    auto end() { return ListIterator<T>(m_data + size()); }
 
 private:
     Size m_size { 0 };
