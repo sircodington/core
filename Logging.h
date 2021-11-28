@@ -17,12 +17,12 @@ public:
     template<typename... Args>
     inline static void log(Args... args)
     {
-        (log1(args), ...);
+        (log_one(args), ...);
     }
 
 private:
     template<typename T>
-    inline static void log1(T value)
+    inline static void log_one(T value)
     {
         Logger<T>::log(value);
     }
