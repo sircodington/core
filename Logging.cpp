@@ -10,6 +10,7 @@
 
 namespace core {
 
+void Logger<char>::log(char value) { printf("%c", value); }
 void Logger<const char *>::log(const char *string) { printf("%s", string); }
 
 void Logger<s8>::log(s8 value) { printf("%" PRId8, value); }

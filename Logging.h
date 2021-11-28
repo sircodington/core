@@ -29,6 +29,12 @@ private:
 };
 
 template<>
+class Logger<char>
+{
+public:
+    static void log(char);
+};
+template<>
 class Logger<const char *>
 {
 public:
