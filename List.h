@@ -61,7 +61,12 @@ public:
     {
         ensure_capacity(initial_capacity);
     }
-    ~List();
+    List(const List<T> &other) { copy_here(other); }
+    List(List<T> &&other) noexcept { consume(std::move(other)); }
+    ~List() { clear(); }
+
+    List<T> &operator=(const List<T> &);
+    List<T> &operator=(List<T> &&) noexcept;
 
     [[nodiscard]] Size size() const { return m_size; }
     [[nodiscard]] bool is_empty() const { return size() == 0; }
@@ -81,17 +86,33 @@ public:
     auto begin() { return ListIterator<T>(m_data); }
     auto end() { return ListIterator<T>(m_data + size()); }
 
+    void clear();
+
 private:
+    void copy_here(const List<T> &);
+    void consume(List<T> &&);
+
     Size m_size { 0 };
     Size m_capacity { 0 };
     T *m_data { nullptr };
 };
 
 template<typename T>
-List<T>::~List()
+List<T> &List<T>::operator=(const List<T> &other)
 {
-    if (m_data)
-        free(m_data);
+    clear();
+    if (this != &other)
+        copy_here(other);
+    return *this;
+}
+
+template<typename T>
+List<T> &List<T>::operator=(List<T> &&other) noexcept
+{
+    clear();
+    if (this != &other)
+        consume(std::move(other));
+    return *this;
 }
 
 template<typename T>
@@ -139,6 +160,31 @@ T &List<T>::operator[](Index index)
 {
     assert(in_bounds(index) and "List index out of bounds");
     return m_data[index];
+}
+
+template<typename T>
+void List<T>::copy_here(const List<T> &other)
+{
+    for (const auto &elem : other) { add(elem); }
+}
+
+template<typename T>
+void List<T>::consume(List<T> &&other)
+{
+    m_size = std::exchange(other.m_size, 0);
+    m_capacity = std::exchange(other.m_capacity, 0);
+    m_data = std::exchange(other.m_data, nullptr);
+}
+
+template<typename T>
+void List<T>::clear()
+{
+    if (m_data) {
+        free(m_data);
+        m_data = nullptr;
+        m_size = 0;
+        m_capacity = 0;
+    }
 }
 
 }  // namespace core
