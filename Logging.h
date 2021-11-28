@@ -106,6 +106,8 @@ public:
 
 }  // namespace core
 
+using core::Logging;
+
 #define debug_log(...)                   \
     do {                                 \
         core::Logging::log(__VA_ARGS__); \
