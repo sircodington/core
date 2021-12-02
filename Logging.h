@@ -14,18 +14,19 @@ namespace core {
 class Logging
 {
 public:
-    template<typename... Args>
-    inline static void log(Args... args)
-    {
-        (log_one(args), ...);
-    }
-
-private:
-    template<typename T>
-    inline static void log_one(T value)
+    template<typename T, typename... Args>
+    inline static void log(const T &value, Args... args)
     {
         Logger<T>::log(value);
+        Logging::log(args...);
     }
+    template<typename T, typename... Args>
+    inline static void log(const T *value, Args... args)
+    {
+        Logger<const T *>::log(value);
+        Logging::log(args...);
+    }
+    inline static void log() {}
 };
 
 template<>
