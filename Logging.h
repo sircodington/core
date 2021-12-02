@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "Logger.h"
-#include "Types.h"
+#include <core/Logger.h>
+#include <core/Types.h>
 
 namespace core {
 
