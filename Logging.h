@@ -14,6 +14,8 @@ namespace core {
 class Logging
 {
 public:
+    // @TODO: log copies values if a `const T &` is contained in Args
+
     template<typename T, typename... Args>
     inline static void log(const T &value, Args... args)
     {
