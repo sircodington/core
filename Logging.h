@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <utility>
+
 #include <core/Logger.h>
 #include <core/Types.h>
 
@@ -14,21 +16,23 @@ namespace core {
 class Logging
 {
 public:
-    // @TODO: log copies values if a `const T &` is contained in Args
+    template<typename... Args>
+    inline static void log(Args &&...args)
+    {
+        (log_one(std::forward<Args>(args)), ...);
+    }
 
-    template<typename T, typename... Args>
-    inline static void log(const T &value, Args... args)
+private:
+    template<typename T>
+    inline static void log_one(const T &value)
     {
-        Logger<T>::log(value);
-        Logging::log(args...);
+        Logger<T>::log(std::forward<const T &>(value));
     }
-    template<typename T, typename... Args>
-    inline static void log(const T *value, Args... args)
+    template<typename T>
+    inline static void log_one(const T *value)
     {
-        Logger<const T *>::log(value);
-        Logging::log(args...);
+        Logger<T>::log(std::forward<const T *>(value));
     }
-    inline static void log() {}
 };
 
 template<>
@@ -36,11 +40,6 @@ class Logger<char>
 {
 public:
     static void log(char);
-};
-template<>
-class Logger<const char *>
-{
-public:
     static void log(const char *);
 };
 
