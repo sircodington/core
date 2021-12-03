@@ -9,7 +9,7 @@
 #include <cassert>
 #include <utility>  // std::move
 
-#include <core/Logger.h>
+#include <core/Formatter.h>
 #include <core/StringView.h>
 #include <core/Types.h>
 
@@ -53,10 +53,10 @@ private:
 };
 
 template<>
-class Logger<String>
+class Formatter<String>
 {
 public:
-    static void log(const String &);
+    static void format(StringBuilder &, const String &);
 };
 
 }  // namespace core

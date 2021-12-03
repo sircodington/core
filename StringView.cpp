@@ -6,6 +6,8 @@
 
 #include "StringView.h"
 
+#include <core/StringBuilder.h>
+
 #include <cstdio>
 #include <cstring>
 
@@ -22,9 +24,9 @@ StringView::StringView(const char *data, s64 size)
 {
 }
 
-void Logger<StringView>::log(const StringView &value)
+void Formatter<StringView>::format(StringBuilder &b, const StringView &value)
 {
-    for (Index i = 0; i < value.size(); ++i) { printf("%c", value[i]); }
+    b.append(value);
 }
 
 }  // namespace core

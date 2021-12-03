@@ -1,9 +1,9 @@
 project(core LANGUAGES C CXX)
 
 set(${PROJECT_NAME}_HEADERS
-    Logger.h
+    Formatter.h
     Types.h
-    Logging.h
+        Formatting.h
     String.h
     StringBuilder.h
     StringView.h
@@ -12,7 +12,7 @@ set(${PROJECT_NAME}_HEADERS
 )
 
 set(${PROJECT_NAME}_SOURCES
-    Logging.cpp
+    Formatter.cpp
     String.cpp
     StringBuilder.cpp
     StringView.cpp

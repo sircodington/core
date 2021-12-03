@@ -8,7 +8,7 @@
 
 #include <cassert>
 
-#include <core/Logger.h>
+#include <core/Formatter.h>
 #include <core/Types.h>
 
 namespace core {
@@ -34,10 +34,10 @@ private:
 };
 
 template<>
-class Logger<StringView>
+class Formatter<StringView>
 {
 public:
-    static void log(const StringView &);
+    static void format(StringBuilder &, const StringView &);
 };
 
 }  // namespace core

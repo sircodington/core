@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <core/Logging.h>
+#include <core/Formatting.h>
 
 namespace core {
 
@@ -63,6 +63,9 @@ void String::consume(String &&other)
     m_size = std::exchange(other.m_size, 0);
 }
 
-void Logger<String>::log(const String &value) { Logging::log(value.view()); }
+void Formatter<String>::format(StringBuilder &builder, const String &value)
+{
+    Formatting::format_into(builder, value.view());
+}
 
 }  // namespace core
