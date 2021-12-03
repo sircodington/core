@@ -4,6 +4,7 @@ set(${PROJECT_NAME}_HEADERS
     Logger.h
     Types.h
     Logging.h
+    String.h
     StringView.h
     Either.h
     List.h
@@ -11,6 +12,7 @@ set(${PROJECT_NAME}_HEADERS
 
 set(${PROJECT_NAME}_SOURCES
     Logging.cpp
+    String.cpp
     StringView.cpp
 )
 

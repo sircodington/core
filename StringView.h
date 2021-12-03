@@ -8,21 +8,19 @@
 
 #include <cassert>
 
-#include "Logger.h"
-#include "Types.h"
+#include <core/Logger.h>
+#include <core/Types.h>
 
 namespace core {
 
 class StringView
 {
 public:
-    StringView()
-        : StringView(nullptr)
-    {
-    }
+    StringView();
     StringView(const char *data, s64 size = -1);
 
     [[nodiscard]] const char *data() const { return m_data; }
+    [[nodiscard]] char *data() { return const_cast<char *>(m_data); }
     [[nodiscard]] Size size() const { return m_size; }
     [[nodiscard]] char operator[](Index index) const
     {
@@ -31,7 +29,7 @@ public:
     }
 
 private:
-    const char *m_data { nullptr };
+    char *m_data { nullptr };
     Size m_size { 0 };
 };
 

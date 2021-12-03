@@ -11,8 +11,13 @@
 
 namespace core {
 
+StringView::StringView()
+    : StringView(nullptr)
+{
+}
+
 StringView::StringView(const char *data, s64 size)
-    : m_data(data)
+    : m_data(const_cast<char *>(data))
     , m_size(data ? (size > -1 ? size : strlen(data)) : 0)
 {
 }
