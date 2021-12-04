@@ -29,6 +29,14 @@ public:
     String &operator=(const String &);
     String &operator=(String &&) noexcept;
 
+    bool operator==(const String &other) const { return *this == other.view(); }
+    bool operator!=(const String &other) const { return not(*this == other); }
+    bool operator==(const StringView &other) const { return view() == other; }
+    bool operator!=(const StringView &other) const
+    {
+        return not(*this == other);
+    }
+
     [[nodiscard]] const char *data() const { return m_data; }
     [[nodiscard]] char *data() { return m_data; }
     [[nodiscard]] Size size() const { return m_size; }

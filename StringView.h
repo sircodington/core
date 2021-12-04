@@ -28,6 +28,12 @@ public:
         return *(data() + index);
     }
 
+    bool operator==(const StringView &other) const;
+    bool operator!=(const StringView &other) const
+    {
+        return not(*this == other);
+    }
+
 private:
     char *m_data { nullptr };
     Size m_size { 0 };

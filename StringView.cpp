@@ -24,6 +24,16 @@ StringView::StringView(const char *data, s64 size)
 {
 }
 
+bool StringView::operator==(const StringView &other) const
+{
+    if (size() != other.size())
+        return false;
+    if (data() == other.data())
+        return true;
+
+    return not memcmp(data(), other.data(), size());
+}
+
 void Formatter<StringView>::format(StringBuilder &b, const StringView &value)
 {
     b.append(value);
