@@ -40,6 +40,8 @@ public:
     [[nodiscard]] const char *data() const { return m_data; }
     [[nodiscard]] char *data() { return m_data; }
     [[nodiscard]] Size size() const { return m_size; }
+    [[nodiscard]] bool is_empty() const { return size() == 0; }
+    [[nodiscard]] bool non_empty() const { return not is_empty(); }
     [[nodiscard]] char operator[](Index index) const
     {
         assert(index < size());
