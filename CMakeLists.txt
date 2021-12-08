@@ -1,6 +1,7 @@
 project(core LANGUAGES C CXX)
 
 set(${PROJECT_NAME}_HEADERS
+    Arena.h
     Either.h
     Formatter.h
     Formatting.h
@@ -12,6 +13,7 @@ set(${PROJECT_NAME}_HEADERS
 )
 
 set(${PROJECT_NAME}_SOURCES
+    Arena.cpp
     Formatter.cpp
     String.cpp
     StringBuilder.cpp
