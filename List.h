@@ -80,6 +80,10 @@ public:
 
     const T &operator[](Index) const;
     T &operator[](Index);
+    const T &first() const { return (*this)[0]; }
+    T &first() { return (*this)[0]; }
+    const T &last() const { return (*this)[size() - 1]; }
+    T &last() { return (*this)[size() - 1]; }
 
     auto begin() const { return ListIterator<T>(m_data); }
     auto end() const { return ListIterator<T>(m_data + size()); }
