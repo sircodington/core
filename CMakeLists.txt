@@ -1,14 +1,14 @@
 project(core LANGUAGES C CXX)
 
 set(${PROJECT_NAME}_HEADERS
+    Either.h
     Formatter.h
-    Types.h
-        Formatting.h
+    Formatting.h
+    List.h
     String.h
     StringBuilder.h
     StringView.h
-    Either.h
-    List.h
+    Types.h
 )
 
 set(${PROJECT_NAME}_SOURCES
