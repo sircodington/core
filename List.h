@@ -53,6 +53,7 @@ private:
     T *m_elem { nullptr };
 };
 
+// @TODO: Allocate into arena?
 template<typename T>
 class List
 {
