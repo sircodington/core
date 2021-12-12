@@ -76,6 +76,7 @@ public:
 
     void ensure_capacity(Size new_capacity);
 
+    bool contains(const T &value) const;
     void add(const T &);
     void add(T &&);
 
@@ -135,6 +136,15 @@ void List<T>::ensure_capacity(Size new_capacity)
     assert(data and "realloc returned nullptr!");
     m_data = reinterpret_cast<T *>(data);
     m_capacity = capacity;
+}
+
+template<typename T>
+bool List<T>::contains(const T &value) const
+{
+    for (const auto &elem : *this)
+        if (elem == value)
+            return true;
+    return false;
 }
 
 template<typename T>
