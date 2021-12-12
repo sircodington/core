@@ -15,7 +15,11 @@ class Set
 {
 public:
     bool contains(const T &value) const { return m_list.contains(value); }
-    u64 size() const { return m_list.size(); }
+
+    [[nodiscard]] Size size() const { return m_list.size(); }
+    [[nodiscard]] bool is_empty() const { return m_list.is_empty(); }
+    [[nodiscard]] bool non_empty() const { return m_list.non_empty(); }
+
     void add(const T &);
     void add(T &&);
 
