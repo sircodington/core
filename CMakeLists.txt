@@ -6,6 +6,7 @@ set(${PROJECT_NAME}_HEADERS
     Formatter.h
     Formatting.h
     List.h
+    Set.h
     String.h
     StringBuilder.h
     StringView.h
