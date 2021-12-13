@@ -18,7 +18,12 @@ class Arena
 {
 public:
     Arena();
+    Arena(const Arena &) = delete;
+    Arena(Arena &&) = default;
     ~Arena();
+
+    Arena &operator=(const Arena &) = delete;
+    Arena &operator=(Arena &&) = default;
 
     void *alloc(u64);
 
