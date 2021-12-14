@@ -23,7 +23,7 @@ public:
     {
         core::StringBuilder builder;
         core::Formatting::format_into(builder, std::forward<Args>(args)...);
-        return builder.toString();
+        return builder.to_string();
     }
     template<typename... Args>
     inline static void format_into(StringBuilder &builder, Args &&...args)

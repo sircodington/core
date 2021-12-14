@@ -83,7 +83,7 @@ void StringBuilder::append(double value)
     append_impl(*this, value, "%" PRIf64);
 }
 
-String StringBuilder::toString()
+String StringBuilder::to_string()
 {
     switch (m_memory) {
         case Memory::Inline: {

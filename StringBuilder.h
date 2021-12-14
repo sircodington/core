@@ -41,7 +41,7 @@ public:
     void append(float);
     void append(double);
 
-    String toString();
+    String to_string();
 
 private:
     char *writeable_location_with_space_for(u64 byte_count);
