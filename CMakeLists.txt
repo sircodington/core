@@ -2,6 +2,7 @@ project(core LANGUAGES C CXX)
 
 set(${PROJECT_NAME}_HEADERS
     Arena.h
+    BitField.h
     Either.h
     Formatter.h
     Formatting.h
