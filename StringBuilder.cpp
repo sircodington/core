@@ -104,4 +104,9 @@ String StringBuilder::to_string()
     }
 }
 
+StringView StringBuilder::to_view() const
+{
+    return StringView(m_data, s64(m_size));
+}
+
 }  // namespace core

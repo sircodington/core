@@ -42,6 +42,7 @@ public:
     void append(double);
 
     String to_string();
+    [[nodiscard]] StringView to_view() const;
 
 private:
     char *writeable_location_with_space_for(u64 byte_count);
