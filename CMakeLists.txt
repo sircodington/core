@@ -6,6 +6,7 @@ set(${PROJECT_NAME}_HEADERS
     Either.h
     Formatter.h
     Formatting.h
+    Files.h
     List.h
     Map.h
     Set.h
@@ -18,6 +19,7 @@ set(${PROJECT_NAME}_HEADERS
 set(${PROJECT_NAME}_SOURCES
     Arena.cpp
     Formatter.cpp
+    Files.cpp
     String.cpp
     StringBuilder.cpp
     StringView.cpp
