@@ -8,6 +8,7 @@ set(${PROJECT_NAME}_HEADERS
     Formatting.h
     Files.h
     List.h
+    ListView.h
     Map.h
     Set.h
     StopWatch.h

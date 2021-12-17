@@ -10,49 +10,12 @@
 #include <cstdlib>
 #include <utility>  // std::move
 
-#include "Types.h"
+#include <core/ListView.h>
+#include <core/Types.h>
 
 namespace core {
 
 // @TODO: Allow inline storage
-
-template<typename T>
-class ListIterator
-{
-public:
-    explicit ListIterator(T *elem)
-        : m_elem(elem)
-    {
-    }
-
-    bool operator==(const ListIterator<T> &other) const
-    {
-        return m_elem == other.m_elem;
-    }
-    bool operator!=(const ListIterator<T> &other) const
-    {
-        return not(*this == other);
-    }
-
-    const T &operator*() const { return *m_elem; }
-    T &operator*() { return *m_elem; }
-
-    ListIterator<T> &operator++()
-    {
-        ++m_elem;
-        return *this;
-    }
-    ListIterator<T> operator++(int) const
-    {
-        ListIterator<T> iterator = *this;
-        ++(*this);
-        return iterator;
-    }
-
-private:
-    T *m_elem { nullptr };
-};
-
 // @TODO: Allocate into arena?
 template<typename T>
 class List
@@ -87,10 +50,12 @@ public:
     const T &last() const { return (*this)[size() - 1]; }
     T &last() { return (*this)[size() - 1]; }
 
-    auto begin() const { return ListIterator<T>(m_data); }
-    auto end() const { return ListIterator<T>(m_data + size()); }
-    auto begin() { return ListIterator<T>(m_data); }
-    auto end() { return ListIterator<T>(m_data + size()); }
+    ListView<T> to_view() const { return ListView<T>(m_data, size()); }
+    ListView<T> to_view() { return ListView<T>(m_data, size()); }
+    auto begin() const { return to_view().begin(); }
+    auto end() const { return to_view().end(); }
+    auto begin() { return to_view().begin(); }
+    auto end() { return to_view().end(); }
 
     void clear();
 
