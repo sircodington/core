@@ -10,6 +10,7 @@ set(${PROJECT_NAME}_HEADERS
     List.h
     ListView.h
     Map.h
+    RingBuffer.h
     Set.h
     StopWatch.h
     String.h
