@@ -28,6 +28,13 @@ public:
 };
 
 template<>
+class Formatter<bool>
+{
+public:
+    static void format(StringBuilder &, bool);
+};
+
+template<>
 class Formatter<s8>
 {
 public:

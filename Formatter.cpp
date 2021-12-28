@@ -16,6 +16,10 @@ void Formatter<char>::format(StringBuilder &b, const char *value)
     b.append(value);
 }
 
+void Formatter<bool>::format(StringBuilder &b, bool value)
+{
+    b.append(value ? "true" : "false");
+}
 void Formatter<s8>::format(StringBuilder &b, s8 value) { b.append(value); }
 void Formatter<s16>::format(StringBuilder &b, s16 value) { b.append(value); }
 void Formatter<s32>::format(StringBuilder &b, s32 value) { b.append(value); }
