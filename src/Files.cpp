@@ -4,11 +4,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 //
 
-#include "Files.h"
-
-#include <core/StringBuilder.h>
+#include <core/Files.h>
 
 #include <cstdio>
+
+#include <core/StringBuilder.h>
 
 namespace core {
 

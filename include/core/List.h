@@ -160,6 +160,8 @@ template<typename T>
 void List<T>::clear()
 {
     if (m_data) {
+        // @TODO: Missing destructor calls, here
+        for (Index i = 0; i < size(); ++i) (*this)[i].~T();
         free(m_data);
         m_data = nullptr;
         m_size = 0;

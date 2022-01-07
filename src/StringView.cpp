@@ -4,12 +4,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 //
 
-#include "StringView.h"
+#include <core/StringView.h>
+
+#include <cstring>
 
 #include <core/StringBuilder.h>
-
-#include <cstdio>
-#include <cstring>
 
 namespace core {
 

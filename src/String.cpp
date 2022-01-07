@@ -4,9 +4,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 //
 
-#include "String.h"
+#include <core/String.h>
 
-#include <cstdlib>
 #include <cstring>
 
 #include <core/Formatting.h>

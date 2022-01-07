@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 //
 
-#include "StopWatch.h"
+#include <core/StopWatch.h>
 
 #include <cassert>
 #include <chrono>

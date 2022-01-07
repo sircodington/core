@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 //
 
-#include "Arena.h"
+#include <core/Arena.h>
 
 namespace core {
 

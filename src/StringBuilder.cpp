@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 //
 
-#include "StringBuilder.h"
+#include <core/StringBuilder.h>
 
 #include <cstdio>
 #include <cstring>

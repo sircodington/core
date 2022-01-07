@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include "Types.h"
-
 #include <cassert>
 #include <cstring>
 #include <utility>  // std::move
+
+#include <core/Types.h>
 
 namespace core {
 
@@ -53,6 +53,7 @@ public:
         }
     }
 
+    // @TODO: Wrong naming convention
     [[nodiscard]] bool isLeft() const { return Side::Left == m_side; }
     [[nodiscard]] bool isRight() const { return Side::Right == m_side; }
 
