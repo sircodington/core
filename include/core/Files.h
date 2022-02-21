@@ -17,6 +17,7 @@ public:
     Files() = delete;
 
     static String read_completely(StringView file_path);
+    static void write_completely(StringView file_path, StringView contents);
 };
 
 }  // namespace core

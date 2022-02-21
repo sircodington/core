@@ -46,4 +46,27 @@ String Files::read_completely(StringView file_path)
     return result_buffer.to_string();
 }
 
+void Files::write_completely(StringView file_path, StringView contents)
+{
+    StringBuilder file_path_builder;
+    StringView zero_terminated_file_path;
+    {
+        file_path_builder.append(file_path);
+        file_path_builder.append('\0');
+        const auto path_view = file_path_builder.to_view();
+        zero_terminated_file_path = {
+            path_view.data(),
+            s64(path_view.size() - 1),
+        };
+    }
+
+    auto file = fopen(zero_terminated_file_path.data(), "wb");
+    assert(file);
+
+    auto count = fwrite(contents.data(), contents.size(), 1, file);
+    assert(count == 1);
+
+    assert(not fclose(file));
+}
+
 }  // namespace core
