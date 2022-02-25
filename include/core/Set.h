@@ -22,6 +22,7 @@ public:
 
     void add(const T &);
     void add(T &&);
+    void clear();
 
     bool operator==(const Set<T> &) const;
     bool operator!=(const Set<T> &other) const { return not(*this == other); }
@@ -49,6 +50,12 @@ void Set<T>::add(T &&value)
     if (contains(value))
         return;
     m_list.add(std::move(value));
+}
+
+template<typename T>
+void Set<T>::clear()
+{
+    m_list.clear();
 }
 
 template<typename T>
