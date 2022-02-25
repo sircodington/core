@@ -18,6 +18,7 @@ public:
     bool contains(const K &value) const { return m_keys.contains(value); }
     void add(const K &, const V &);
     V &get(const K &);
+    void clear();
 
     auto begin() const { return m_keys.begin(); }
     auto end() const { return m_keys.end(); }
@@ -58,6 +59,13 @@ V &Map<K, V>::get(const K &key)
     }
 
     return result_pair->value;
+}
+
+template<typename K, typename V>
+void Map<K, V>::clear()
+{
+    m_keys.clear();
+    m_list.clear();
 }
 
 }  // namespace core
