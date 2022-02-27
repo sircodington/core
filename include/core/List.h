@@ -32,10 +32,13 @@ public:
     List<T> &operator=(const List<T> &);
     List<T> &operator=(List<T> &&) noexcept;
 
-    [[nodiscard]] Size size() const { return m_size; }
-    [[nodiscard]] bool is_empty() const { return size() == 0; }
-    [[nodiscard]] bool non_empty() const { return not is_empty(); }
-    [[nodiscard]] bool in_bounds(Index index) const { return index < size(); }
+    [[nodiscard]] inline Size size() const { return m_size; }
+    [[nodiscard]] inline bool is_empty() const { return size() == 0; }
+    [[nodiscard]] inline bool non_empty() const { return not is_empty(); }
+    [[nodiscard]] inline bool in_bounds(Index index) const
+    {
+        return index < size();
+    }
 
     void ensure_capacity(Size new_capacity);
 
