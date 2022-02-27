@@ -109,9 +109,11 @@ void List<T>::ensure_capacity(Size new_capacity)
 template<typename T>
 bool List<T>::contains(const T &value) const
 {
-    for (const auto &elem : *this)
-        if (elem == value)
+    const auto size = this->size();
+    for (Index i = 0; i < size; ++i) {
+        if (m_data[i] == value)
             return true;
+    }
     return false;
 }
 
