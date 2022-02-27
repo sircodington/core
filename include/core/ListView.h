@@ -18,29 +18,29 @@ template<typename T>
 class ListViewIterator
 {
 public:
-    explicit ListViewIterator(T *elem)
+    constexpr explicit ListViewIterator(T *elem)
         : m_elem(elem)
     {
     }
 
-    bool operator==(const ListViewIterator<T> &other) const
+    constexpr bool operator==(const ListViewIterator<T> &other) const
     {
         return m_elem == other.m_elem;
     }
-    bool operator!=(const ListViewIterator<T> &other) const
+    constexpr bool operator!=(const ListViewIterator<T> &other) const
     {
         return not(*this == other);
     }
 
-    const T &operator*() const { return *m_elem; }
-    T &operator*() { return *m_elem; }
+    constexpr const T &operator*() const { return *m_elem; }
+    constexpr T &operator*() { return *m_elem; }
 
-    ListViewIterator<T> &operator++()
+    constexpr ListViewIterator<T> &operator++()
     {
         ++m_elem;
         return *this;
     }
-    ListViewIterator<T> operator++(int) const
+    constexpr ListViewIterator<T> operator++(int) const
     {
         ListViewIterator<T> iterator = *this;
         ++(*this);
@@ -55,12 +55,15 @@ template<typename T>
 class ListView
 {
 public:
-    ListView(const T *, Size);
-    ListView(T *, Size);
-    [[nodiscard]] Size size() const { return m_size; }
-    [[nodiscard]] bool is_empty() const { return size() == 0; }
-    [[nodiscard]] bool non_empty() const { return not is_empty(); }
-    [[nodiscard]] bool in_bounds(Index index) const { return index < size(); }
+    constexpr ListView(const T *, Size);
+    constexpr ListView(T *, Size);
+    [[nodiscard]] constexpr Size size() const { return m_size; }
+    [[nodiscard]] constexpr bool is_empty() const { return size() == 0; }
+    [[nodiscard]] constexpr bool non_empty() const { return not is_empty(); }
+    [[nodiscard]] constexpr bool in_bounds(Index index) const
+    {
+        return index < size();
+    }
 
     bool contains(const T &value) const;
 
@@ -71,23 +74,23 @@ public:
     const T &last() const { return (*this)[size() - 1]; }
     T &last() { return (*this)[size() - 1]; }
 
-    auto begin() const { return ListViewIterator<T>(m_data); }
-    auto end() const { return ListViewIterator<T>(m_data + size()); }
-    auto begin() { return ListViewIterator<T>(m_data); }
-    auto end() { return ListViewIterator<T>(m_data + size()); }
+    constexpr auto begin() const { return ListViewIterator<T>(m_data); }
+    constexpr auto end() const { return ListViewIterator<T>(m_data + size()); }
+    constexpr auto begin() { return ListViewIterator<T>(m_data); }
+    constexpr auto end() { return ListViewIterator<T>(m_data + size()); }
 
     Size m_size { 0 };
     T *m_data { nullptr };
 };
 
 template<typename T>
-ListView<T>::ListView(const T *data, Size size)
+constexpr ListView<T>::ListView(const T *data, Size size)
     : ListView(const_cast<T *>(data), size)
 {
 }
 
 template<typename T>
-ListView<T>::ListView(T *data, Size size)
+constexpr ListView<T>::ListView(T *data, Size size)
     : m_data(data)
     , m_size(size)
 {
