@@ -12,7 +12,7 @@
 
 namespace core {
 
-template<u64 Size>
+template<u64 Size, typename Component = u8>
 class BitField
 {
 public:
@@ -25,31 +25,33 @@ public:
     void set(Index, bool);
 
 private:
-    constexpr static u64 Additional = Size % 8 == 0 ? 0 : 1;
-    u8 m_data[Size / 8 + Additional] {};
+    static constexpr ::Size ComponentBits { sizeof(Component) * 8 };
+
+    constexpr static u64 Additional = Size % ComponentBits == 0 ? 0 : 1;
+    Component m_data[Size / ComponentBits + Additional] {};
 };
 
-template<u64 Size>
-bool BitField<Size>::get(Index i) const
+template<u64 Size, typename Component>
+bool BitField<Size, Component>::get(Index i) const
 {
     assert(in_bounds(i));
-    const auto byte = m_data[i / 8];
-    const auto mask = 1u << u8(i % 8);
+    const auto byte = m_data[i / ComponentBits];
+    const auto mask = 1u << Component(i % ComponentBits);
     return (byte & mask) == mask;
 }
 
-template<u64 Size>
-bool BitField<Size>::get(Index i)
+template<u64 Size, typename Component>
+bool BitField<Size, Component>::get(Index i)
 {
-    return const_cast<const BitField<Size> &>(*this).get(i);
+    return const_cast<const BitField<Size, Component> &>(*this).get(i);
 }
 
-template<u64 Size>
-void BitField<Size>::set(Index i, bool value)
+template<u64 Size, typename Component>
+void BitField<Size, Component>::set(Index i, bool value)
 {
     assert(in_bounds(i));
-    auto &byte = m_data[i / 8];
-    const auto mask = 1u << u8(i % 8);
+    auto &byte = m_data[i / ComponentBits];
+    const auto mask = 1u << Component(i % ComponentBits);
     byte &= ~mask;
     if (value)
         byte |= mask;
