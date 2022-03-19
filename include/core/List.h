@@ -40,6 +40,9 @@ public:
         return index < size();
     }
 
+    bool operator==(const List<T> &) const;
+    bool operator!=(const List<T> &other) const { return not(*this == other); }
+
     void ensure_capacity(Size new_capacity);
 
     bool contains(const T &value) const;
@@ -87,6 +90,23 @@ List<T> &List<T>::operator=(List<T> &&other) noexcept
     if (this != &other)
         consume(std::move(other));
     return *this;
+}
+
+template<typename T>
+bool List<T>::operator==(const List<T> &other) const
+{
+    if (this == &other)
+        return true;
+    if (size() != other.size())
+        return false;
+    if (m_data == other.m_data)
+        return true;
+
+    for (Size i = 0; i < size(); ++i) {
+        if ((*this)[i] != other[i])
+            return false;
+    }
+    return true;
 }
 
 template<typename T>
