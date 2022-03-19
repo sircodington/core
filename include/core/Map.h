@@ -25,6 +25,12 @@ public:
     auto begin() { return m_keys.begin(); }
     auto end() { return m_keys.end(); }
 
+    bool operator==(const Map<K, V> &) const;
+    bool operator!=(const Map<K, V> &other) const
+    {
+        return not(*this == other);
+    }
+
 private:
     struct Pair
     {
@@ -66,6 +72,21 @@ void Map<K, V>::clear()
 {
     m_keys.clear();
     m_list.clear();
+}
+
+template<typename K, typename V>
+bool Map<K, V>::operator==(const Map<K, V> &other) const
+{
+    if (this == &other)
+        return true;
+    if (m_keys != other.m_keys)
+        return false;
+
+    for (const auto &key : m_keys) {
+        if (get(key) != other.get(key))
+            return false;
+    }
+    return true;
 }
 
 }  // namespace core
