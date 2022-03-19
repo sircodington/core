@@ -17,6 +17,7 @@ class Map
 public:
     bool contains(const K &value) const { return m_keys.contains(value); }
     void add(const K &, const V &);
+    const V &get(const K &) const;
     V &get(const K &);
     void clear();
 
@@ -49,6 +50,22 @@ void Map<K, V>::add(const K &key, const V &value)
         return;
     m_keys.add(key);
     m_list.add({ key, value });
+}
+
+template<typename K, typename V>
+const V &Map<K, V>::get(const K &key) const
+{
+    assert(contains(key));
+
+    Pair *result_pair = nullptr;
+    for (auto &pair : m_list) {
+        if (pair.key == key) {
+            result_pair = &pair;
+            break;
+        }
+    }
+
+    return result_pair->value;
 }
 
 template<typename K, typename V>
