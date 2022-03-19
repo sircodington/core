@@ -51,3 +51,11 @@ public:
 }  // namespace core
 
 using core::StringView;
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wuser-defined-literals"
+[[nodiscard]] inline StringView operator"" sv(const char *p, size_t length)
+{
+    return { p, s64(length) };
+}
+#pragma clang diagnostic pop
