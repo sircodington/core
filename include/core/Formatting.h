@@ -48,11 +48,11 @@ private:
 
 using core::Formatting;
 
-#define debug_log(...)                                       \
-    do {                                                     \
-        auto string = core::Formatting::format(__VA_ARGS__); \
-        auto view = string.view();                           \
-        printf("%.*s", int(view.size()), view.data());       \
+#define debug_log(...)                                          \
+    do {                                                        \
+        auto ___string = core::Formatting::format(__VA_ARGS__); \
+        auto ___view = ___string.view();                        \
+        printf("%.*s", int(___view.size()), ___view.data());    \
     } while (0)
 
 #define compose(...) core::Formatting::format(__VA_ARGS__)
