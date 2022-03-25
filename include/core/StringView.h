@@ -24,17 +24,28 @@ public:
     [[nodiscard]] Size size() const { return m_size; }
     [[nodiscard]] bool is_empty() const { return size() == 0; }
     [[nodiscard]] bool non_empty() const { return not is_empty(); }
-    [[nodiscard]] char operator[](Index index) const
+    [[nodiscard]] const char &at(Index index) const
     {
         assert(index < size());
         return *(data() + index);
     }
+    [[nodiscard]] char &at(Index index)
+    {
+        assert(index < size());
+        return *(data() + index);
+    }
+    inline const char &operator[](Index index) const { return at(index); }
+    inline char &operator[](Index index) { return at(index); }
 
     bool operator==(const StringView &other) const;
     bool operator!=(const StringView &other) const
     {
         return not(*this == other);
     }
+
+    [[nodiscard]] s64 last_index_of(char) const;
+
+    void replace(char c, char replacement);
 
 private:
     char *m_data { nullptr };

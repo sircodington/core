@@ -12,6 +12,8 @@ set(${PROJECT_NAME}_HEADERS
     include/core/Formatter.h
     include/core/Formatting.h
     include/core/Files.h
+    include/core/IterationDecision.h
+    include/core/LexicalFile.h
     include/core/List.h
     include/core/ListView.h
     include/core/Map.h
@@ -27,6 +29,7 @@ set(${PROJECT_NAME}_HEADERS
 set(${PROJECT_NAME}_SOURCES
     src/Arena.cpp
     src/Formatter.cpp
+    src/LexicalFile.cpp
     src/Files.cpp
     src/StopWatch.cpp
     src/String.cpp
@@ -43,6 +46,8 @@ target_include_directories(${PROJECT_NAME}
 )
 
 set(${PROJECT_NAME}_TEST_SOURCES
+    test/test_lexical_file.cpp
+    test/test_string_view.cpp
     test/main.cpp
 )
 add_executable(${PROJECT_NAME}-test
