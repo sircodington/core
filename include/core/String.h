@@ -48,7 +48,14 @@ public:
         return *(data() + index);
     }
 
-    [[nodiscard]] StringView view() const { return { m_data, s64(m_size) }; }
+    [[nodiscard]] inline StringView view() const
+    {
+        return { m_data, s64(m_size) };
+    }
+    inline void replace(char c, char replacement)
+    {
+        view().replace(c, replacement);
+    }
 
 private:
     String(const char *data, Size size);  //! Take ownership
