@@ -6,6 +6,7 @@
 
 #include <cstdlib>
 
+#include "test_lexical_file.h"
 #include "test_string_view.h"
 
 // @TODO: Create "framework" for unit tests
@@ -13,5 +14,6 @@
 int main()
 {
     core::test_string_view();
+    core::test_lexical_file();
     return EXIT_SUCCESS;
 }
