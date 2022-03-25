@@ -12,6 +12,7 @@ set(${PROJECT_NAME}_HEADERS
     include/core/Formatter.h
     include/core/Formatting.h
     include/core/Files.h
+    include/core/IterationDecision.h
     include/core/List.h
     include/core/ListView.h
     include/core/Map.h
