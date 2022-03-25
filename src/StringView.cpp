@@ -33,6 +33,14 @@ bool StringView::operator==(const StringView &other) const
     return not memcmp(data(), other.data(), size());
 }
 
+void StringView::replace(char c, char replacement)
+{
+    for (auto i = 0; i < size(); ++i) {
+        if (at(i) == c)
+            at(i) = replacement;
+    }
+}
+
 void Formatter<StringView>::format(StringBuilder &b, const StringView &value)
 {
     b.append(value);

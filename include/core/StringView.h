@@ -43,6 +43,8 @@ public:
         return not(*this == other);
     }
 
+    void replace(char c, char replacement);
+
 private:
     char *m_data { nullptr };
     Size m_size { 0 };
