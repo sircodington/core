@@ -33,6 +33,15 @@ bool StringView::operator==(const StringView &other) const
     return not memcmp(data(), other.data(), size());
 }
 
+s64 StringView::last_index_of(char c) const
+{
+    for (auto i = s64(size() - 1); i >= 0; --i) {
+        if (at(i) == c)
+            return i;
+    }
+    return -1;
+}
+
 void StringView::replace(char c, char replacement)
 {
     for (auto i = 0; i < size(); ++i) {

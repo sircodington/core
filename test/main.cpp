@@ -6,4 +6,12 @@
 
 #include <cstdlib>
 
-int main() { return EXIT_SUCCESS; }
+#include "test_string_view.h"
+
+// @TODO: Create "framework" for unit tests
+
+int main()
+{
+    core::test_string_view();
+    return EXIT_SUCCESS;
+}

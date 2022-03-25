@@ -43,6 +43,7 @@ target_include_directories(${PROJECT_NAME}
 )
 
 set(${PROJECT_NAME}_TEST_SOURCES
+    test/test_string_view.cpp
     test/main.cpp
 )
 add_executable(${PROJECT_NAME}-test

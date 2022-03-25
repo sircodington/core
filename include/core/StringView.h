@@ -43,6 +43,8 @@ public:
         return not(*this == other);
     }
 
+    [[nodiscard]] s64 last_index_of(char) const;
+
     void replace(char c, char replacement);
 
 private:
