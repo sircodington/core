@@ -43,6 +43,21 @@ public:
         return not(*this == other);
     }
 
+    [[nodiscard]] StringView drop_left(Size) const;
+    [[nodiscard]] StringView take_left(Size) const;
+    template<typename Predicate>
+    Size prefix_length(Predicate &&) const;
+    template<typename Predicate>
+    [[nodiscard]] StringView drop_while(Predicate &&p) const
+    {
+        return drop_left(prefix_length(p));
+    }
+    template<typename Predicate>
+    [[nodiscard]] StringView take_while(Predicate &&p) const
+    {
+        return take_left(prefix_length(p));
+    }
+
     [[nodiscard]] s64 last_index_of(char) const;
 
     void replace(char c, char replacement);
@@ -58,6 +73,18 @@ class Formatter<StringView>
 public:
     static void format(StringBuilder &, const StringView &);
 };
+
+template<typename Predicate>
+Size StringView::prefix_length(Predicate &&predicate) const
+{
+    Size length = 0;
+    for (auto i = 0; i < size(); ++i) {
+        if (not predicate(at(i)))
+            break;
+        ++length;
+    }
+    return length;
+}
 
 }  // namespace core
 

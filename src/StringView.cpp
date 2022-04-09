@@ -6,6 +6,7 @@
 
 #include <core/StringView.h>
 
+#include <algorithm>
 #include <cstring>
 
 #include <core/StringBuilder.h>
@@ -31,6 +32,18 @@ bool StringView::operator==(const StringView &other) const
         return true;
 
     return not memcmp(data(), other.data(), size());
+}
+
+StringView StringView::drop_left(Size n) const
+{
+    auto k = std::min(s64(size()), s64(n));
+    return { data() + k, s64(size()) - s64(k) };
+}
+
+StringView StringView::take_left(Size n) const
+{
+    auto k = std::min(s64(size()), s64(n));
+    return { data(), k };
 }
 
 s64 StringView::last_index_of(char c) const
