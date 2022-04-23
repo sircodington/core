@@ -27,6 +27,8 @@ public:
     bool operator==(const Set<T> &) const;
     bool operator!=(const Set<T> &other) const { return not(*this == other); }
 
+    const List<T> &to_list() const { return m_list; }
+
     auto begin() const { return m_list.begin(); }
     auto end() const { return m_list.end(); }
     auto begin() { return m_list.begin(); }
