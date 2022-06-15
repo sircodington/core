@@ -41,6 +41,7 @@ public:
     void append(float);
     void append(double);
 
+    [[nodiscard]] Size size() const { return m_size; }
     String to_string();
     [[nodiscard]] StringView to_view() const;
 
