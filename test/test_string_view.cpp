@@ -7,26 +7,9 @@
 #include "test_string_view.h"
 
 #include <core/Formatting.h>
+#include <core/Test.h>
 
 namespace core {
-
-#define expect_eq(actual, expect)                  \
-    do {                                           \
-        const auto x = (actual);                   \
-        const auto y = (expect);                   \
-        if (x != y) {                              \
-            debug_log(                             \
-                "Expected equality of values\n  ", \
-                #actual,                           \
-                "\n  ",                            \
-                x,                                 \
-                "\n and\n  ",                      \
-                #expect,                           \
-                "\n  ",                            \
-                y,                                 \
-                "\n\n");                           \
-        }                                          \
-    } while (0)
 
 static void test_string_view_last_index_of()
 {

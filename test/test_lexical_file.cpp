@@ -8,26 +8,9 @@
 
 #include <core/Formatting.h>
 #include <core/LexicalFile.h>
+#include <core/Test.h>
 
 namespace core {
-
-#define expect_eq(actual, expect)                  \
-    do {                                           \
-        const auto x = (actual);                   \
-        const auto y = (expect);                   \
-        if (x != y) {                              \
-            debug_log(                             \
-                "Expected equality of values\n  ", \
-                #actual,                           \
-                "\n  ",                            \
-                x,                                 \
-                "\n and\n  ",                      \
-                #expect,                           \
-                "\n  ",                            \
-                y,                                 \
-                "\n\n");                           \
-        }                                          \
-    } while (0)
 
 void test_lexical_file_parent()
 {
