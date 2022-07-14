@@ -50,10 +50,12 @@ String &String::operator=(String &&other) noexcept
 void String::copy_here(const StringView &other)
 {
     const auto byte_count = sizeof(other[0]) * other.size();
-    m_data = (char *)malloc(byte_count);
+    const auto allocated_byte_count = byte_count + sizeof(other[0]);
+    m_data = (char *)malloc(allocated_byte_count);
     assert(m_data and "malloc returned nullptr");
     m_size = other.size();
     memcpy(m_data, other.data(), byte_count);
+    m_data[other.size()] = '\0';
 }
 
 void String::consume(String &&other)
