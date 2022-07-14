@@ -8,6 +8,7 @@ add_compile_options(-Wswitch)
 set(${PROJECT_NAME}_HEADERS
     include/core/Arena.h
     include/core/BitField.h
+    include/core/CPlugin.h
     include/core/Either.h
     include/core/Formatter.h
     include/core/Formatting.h
@@ -17,6 +18,7 @@ set(${PROJECT_NAME}_HEADERS
     include/core/List.h
     include/core/ListView.h
     include/core/Map.h
+    include/core/Plugin.h
     include/core/RingBuffer.h
     include/core/Set.h
     include/core/StopWatch.h
@@ -28,9 +30,11 @@ set(${PROJECT_NAME}_HEADERS
 
 set(${PROJECT_NAME}_SOURCES
     src/Arena.cpp
+    src/CPlugin.cpp
     src/Formatter.cpp
     src/LexicalFile.cpp
     src/Files.cpp
+    src/Plugin.cpp
     src/StopWatch.cpp
     src/String.cpp
     src/StringBuilder.cpp
