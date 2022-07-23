@@ -77,18 +77,20 @@ private:
 template<typename T>
 List<T> &List<T>::operator=(const List<T> &other)
 {
-    clear();
-    if (this != &other)
+    if (this != &other) {
+        clear();
         copy_here(other);
+    }
     return *this;
 }
 
 template<typename T>
 List<T> &List<T>::operator=(List<T> &&other) noexcept
 {
-    clear();
-    if (this != &other)
+    if (this != &other) {
+        clear();
         consume(std::move(other));
+    }
     return *this;
 }
 
