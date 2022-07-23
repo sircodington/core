@@ -6,6 +6,8 @@
 
 #include <core/Arena.h>
 
+#include <cstring>
+
 namespace core {
 
 Arena::Arena()
@@ -26,6 +28,8 @@ Arena::Block Arena::empty_block(u64 size)
         0,
         size,
     };
+    auto p = reinterpret_cast<u8 *>(block.memory);
+    memset(p, 0, size);
     return block;
 }
 
