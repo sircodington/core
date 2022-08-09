@@ -22,7 +22,7 @@ CPlugin::CPlugin(core::String file_path, void *plugin_handle)
 }
 
 #if defined(_WIN32) || defined(WIN32)
-inline static core::String window_get_last_error()
+inline static core::String windows_get_last_error()
 {
     const auto error_id = ::GetLastError();
     if (error_id == 0)
@@ -55,7 +55,7 @@ Either<core::String, CPlugin> CPlugin::load(core::String file_path)
         file_path.data(), nullptr, LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
 
     if (not plugin_handle)
-        return Result::left(window_get_last_error());
+        return Result::left(windows_get_last_error());
 
     return Result::right(CPlugin(std::move(file_path), plugin_handle));
 #else
