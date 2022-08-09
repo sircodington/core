@@ -7,7 +7,9 @@
 #pragma once
 
 #include <core/Either.h>
+#include <core/List.h>
 #include <core/String.h>
+#include <core/StringView.h>
 #include <core/Types.h>
 
 namespace core {
@@ -15,7 +17,8 @@ namespace core {
 class Plugin
 {
 public:
-    static Either<core::String, Plugin *> load(core::String file_path);
+    static Either<core::String, Plugin *> load(
+        core::List<core::StringView> dll_dirs, core::String file_path);
 
     Plugin();
 
@@ -28,7 +31,7 @@ public:
     Plugin &operator=(Plugin &&) = delete;
 
 private:
-    u8 m_internal[32];
+    u8 m_internal[48];
 };
 
 #define CORE_PLUGIN_HEADER(Type)                   \

@@ -4,6 +4,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 //
 
+#include <algorithm>
+#include <string>
+
 #if defined(_WIN32) || defined(WIN32)
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -14,12 +17,6 @@ static_assert(false, "Only implemened for windows");
 #include <core/CPlugin.h>
 
 namespace core {
-
-CPlugin::CPlugin(core::String file_path, void *plugin_handle)
-    : m_file_path(std::move(file_path))
-    , m_plugin_handle(plugin_handle)
-{
-}
 
 #if defined(_WIN32) || defined(WIN32)
 inline static core::String windows_get_last_error()
@@ -46,10 +43,27 @@ inline static core::String windows_get_last_error()
 }
 #endif
 
-Either<core::String, CPlugin> CPlugin::load(core::String file_path)
+core::String CPlugin::add_dll_directory(core::StringView file_path)
 {
-    using Result = Either<core::String, CPlugin>;
+#if defined(_WIN32) || defined(WIN32)
+    std::wstring file_path_std(
+        file_path.data(), file_path.data() + file_path.size());
+    std::replace(
+        std::begin(file_path_std), std::end(file_path_std), L'/', L'\\');
 
+    if (auto handle = AddDllDirectory(file_path_std.data())) {
+        m_directory_handles.add(handle);
+        return {};
+    }
+
+    return windows_get_last_error();
+#else
+    static_assert(false, "Only implemened for windows");
+#endif
+}
+
+core::String CPlugin::load(core::String file_path)
+{
 #if defined(_WIN32) || defined(WIN32)
     file_path.replace('/', '\\');
 
@@ -57,16 +71,15 @@ Either<core::String, CPlugin> CPlugin::load(core::String file_path)
         file_path.data(), nullptr, LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
 
     if (not plugin_handle)
-        return Result::left(windows_get_last_error());
+        return windows_get_last_error();
 
-    return Result::right(CPlugin(std::move(file_path), plugin_handle));
+    m_file_path = std::move(file_path);
+    m_plugin_handle = plugin_handle;
+    return {};
 #else
     static_assert(false, "Only implemened for windows");
-    return Result::left("Only implemened for windows"sv);
+    return {};
 #endif
-
-    assert(false);
-    return Result::left("Unreachable"sv);
 }
 
 void *CPlugin::proc_address_impl(core::String proc_name) const
@@ -96,6 +109,15 @@ CPlugin &CPlugin::operator=(CPlugin &&other) noexcept
 
 void CPlugin::clear()
 {
+    for (auto directory_handle : m_directory_handles) {
+#if defined(_WIN32) || defined(WIN32)
+        RemoveDllDirectory(directory_handle);
+#else
+        static_assert(false, "Only implemened for windows");
+#endif
+    }
+    m_directory_handles.clear();
+
     if (m_plugin_handle) {
 #if defined(_WIN32) || defined(WIN32)
         auto result = FreeLibrary(reinterpret_cast<HMODULE>(m_plugin_handle));

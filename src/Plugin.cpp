@@ -16,17 +16,20 @@ Plugin::Plugin()
     memset(m_internal, 0, sizeof(m_internal));
 }
 
-Either<core::String, Plugin *> Plugin::load(core::String file_path)
+Either<core::String, Plugin *> Plugin::load(
+    core::List<core::StringView> dll_dirs, core::String file_path)
 {
     using Result = Either<core::String, Plugin *>;
 
-    auto either_plugin = CPlugin::load(std::move(file_path));
-    if (either_plugin.isLeft()) {
-        auto message = std::move(either_plugin.release_left());
-        return Result::left(std::move(message));
+    CPlugin c_plugin;
+    for (auto dll_dir : dll_dirs) {
+        auto error_message = c_plugin.add_dll_directory(dll_dir);
+        if (error_message.non_empty())
+            return Result::left(std::move(error_message));
     }
-
-    auto c_plugin = std::move(either_plugin.release_right());
+    auto error_message = c_plugin.load(std::move(file_path));
+    if (error_message.non_empty())
+        return Result::left(std::move(error_message));
 
     Plugin *(*make_plugin)() = nullptr;
     make_plugin = reinterpret_cast<Plugin *(*)()>(
