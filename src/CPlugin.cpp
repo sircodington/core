@@ -51,6 +51,8 @@ Either<core::String, CPlugin> CPlugin::load(core::String file_path)
     using Result = Either<core::String, CPlugin>;
 
 #if defined(_WIN32) || defined(WIN32)
+    file_path.replace('/', '\\');
+
     auto plugin_handle = LoadLibraryExA(
         file_path.data(), nullptr, LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
 
