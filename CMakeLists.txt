@@ -48,6 +48,11 @@ add_library(${PROJECT_NAME} SHARED
 target_include_directories(${PROJECT_NAME}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+if(UNIX)
+target_link_libraries(${PROJECT_NAME}
+    dl
+)
+endif(UNIX)
 
 set(${PROJECT_NAME}_TEST_SOURCES
     test/test_lexical_file.cpp
