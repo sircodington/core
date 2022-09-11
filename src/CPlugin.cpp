@@ -7,11 +7,13 @@
 #include <algorithm>
 #include <string>
 
+#define UNSUPPORTED_OS static_assert(false, "core::CPlugin was not implemented for this OS, yet!")
+
 #if defined(_WIN32) || defined(WIN32)
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #else
-static_assert(false, "Only implemened for windows");
+UNSUPPORTED_OS;
 #endif
 
 #include <core/CPlugin.h>
@@ -58,7 +60,7 @@ core::String CPlugin::add_dll_directory(core::StringView file_path)
 
     return windows_get_last_error();
 #else
-    static_assert(false, "Only implemened for windows");
+    UNSUPPORTED_OS;
 #endif
 }
 
@@ -77,7 +79,7 @@ core::String CPlugin::load(core::String file_path)
     m_plugin_handle = plugin_handle;
     return {};
 #else
-    static_assert(false, "Only implemened for windows");
+    UNSUPPORTED_OS;
     return {};
 #endif
 }
@@ -93,7 +95,7 @@ void *CPlugin::proc_address_impl(core::String proc_name) const
 
     return reinterpret_cast<void *>(address);
 #else
-    static_assert(false, "Only implemened for windows");
+    UNSUPPORTED_OS;
     return nullptr;
 #endif
 }
@@ -113,7 +115,7 @@ void CPlugin::clear()
 #if defined(_WIN32) || defined(WIN32)
         RemoveDllDirectory(directory_handle);
 #else
-        static_assert(false, "Only implemened for windows");
+	UNSUPPORTED_OS;
 #endif
     }
     m_directory_handles.clear();
@@ -124,7 +126,7 @@ void CPlugin::clear()
         assert(result);
         m_plugin_handle = nullptr;
 #else
-        static_assert(false, "Only implemened for windows");
+	UNSUPPORTED_OS;
 #endif
     }
 }
