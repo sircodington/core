@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2021, Jan Sladek <keddelzz@web.de>
+// Copyright (c) 2021-2022, Jan Sladek <keddelzz@web.de>
 //
 // SPDX-License-Identifier: BSD-2-Clause
 //
@@ -8,6 +8,7 @@
 
 #include <cassert>
 #include <cstdlib>
+#include <new>
 #include <utility>  // std::move
 
 #include <core/ListView.h>
