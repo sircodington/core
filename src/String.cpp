@@ -1,11 +1,12 @@
 //
-// Copyright (c) 2021, Jan Sladek <keddelzz@web.de>
+// Copyright (c) 2021-2022, Jan Sladek <keddelzz@web.de>
 //
 // SPDX-License-Identifier: BSD-2-Clause
 //
 
 #include <core/String.h>
 
+#include <cstdlib>
 #include <cstring>
 
 #include <core/Formatting.h>

@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2021, Jan Sladek <keddelzz@web.de>
+// Copyright (c) 2021-2022, Jan Sladek <keddelzz@web.de>
 //
 // SPDX-License-Identifier: BSD-2-Clause
 //
@@ -7,6 +7,7 @@
 #pragma once
 
 #include <cinttypes>
+#include <cstddef>
 #include <cstdint>
 
 using s8 = int8_t;

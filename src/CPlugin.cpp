@@ -7,11 +7,18 @@
 #include <algorithm>
 #include <string>
 
+#define COMPILETIME_UNSUPPORTED_OS(func) \
+  static_assert(false, (func " is not implemented for this OS, yet!"))
+#define RUNTIME_UNSUPPORTED_OS(func) \
+  assert(false and (func " is not implemented for this OS, yet!"))
+
 #if defined(_WIN32) || defined(WIN32)
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#elif defined(__unix__)
+#include <dlfcn.h>
 #else
-static_assert(false, "Only implemened for windows");
+COMPILETIME_UNSUPPORTED_OS("core::CPlugin");
 #endif
 
 #include <core/CPlugin.h>
@@ -57,8 +64,12 @@ core::String CPlugin::add_dll_directory(core::StringView file_path)
     }
 
     return windows_get_last_error();
+#elif defined(__unix__)
+    // :LinuxDllDirectory:
+    RUNTIME_UNSUPPORTED_OS("CPlugin::add_dll_directory");
+    return {};
 #else
-    static_assert(false, "Only implemened for windows");
+    COMPILETIME_UNSUPPORTED_OS("CPlugin::add_dll_directory");
 #endif
 }
 
@@ -76,8 +87,20 @@ core::String CPlugin::load(core::String file_path)
     m_file_path = std::move(file_path);
     m_plugin_handle = plugin_handle;
     return {};
+#elif defined(__unix__)
+    // @FIXME: Find out the correct set of flags
+    constexpr static int Flags { RTLD_LAZY | RTLD_GLOBAL };
+    auto plugin_handle = dlopen(file_path.data(), Flags);
+
+    const core::StringView error_string(dlerror());
+    if (not plugin_handle)
+        return error_string;
+
+    m_file_path = std::move(file_path);
+    m_plugin_handle = plugin_handle;
+    return {};
 #else
-    static_assert(false, "Only implemened for windows");
+    COMPILETIME_UNSUPPORTED_OS("CPlugin::load");
     return {};
 #endif
 }
@@ -92,8 +115,11 @@ void *CPlugin::proc_address_impl(core::String proc_name) const
         return nullptr;
 
     return reinterpret_cast<void *>(address);
+#elif defined(__unix__)
+    auto address = dlsym(m_plugin_handle, proc_name.data());
+    return address;
 #else
-    static_assert(false, "Only implemened for windows");
+    COMPILETIME_UNSUPPORTED_OS("CPlugin::proc_address_impl");
     return nullptr;
 #endif
 }
@@ -112,8 +138,10 @@ void CPlugin::clear()
     for (auto directory_handle : m_directory_handles) {
 #if defined(_WIN32) || defined(WIN32)
         RemoveDllDirectory(directory_handle);
+#elif defined(__unix__)
+        // :LinuxDllDirectory:
 #else
-        static_assert(false, "Only implemened for windows");
+        COMPILETIME_UNSUPPORTED_OS("CPlugin::clear");
 #endif
     }
     m_directory_handles.clear();
@@ -122,10 +150,13 @@ void CPlugin::clear()
 #if defined(_WIN32) || defined(WIN32)
         auto result = FreeLibrary(reinterpret_cast<HMODULE>(m_plugin_handle));
         assert(result);
-        m_plugin_handle = nullptr;
+#elif defined(__unix__)
+        auto result = dlclose(m_plugin_handle);
+        assert(not result);
 #else
-        static_assert(false, "Only implemened for windows");
+        COMPILETIME_UNSUPPORTED_OS("CPlugin::clear");
 #endif
+        m_plugin_handle = nullptr;
     }
 }
 
