@@ -69,9 +69,9 @@ void StringBuilder::append(s32 value) { append_impl(*this, value, "%" PRId32); }
 void StringBuilder::append(s64 value) { append_impl(*this, value, "%" PRId64); }
 
 void StringBuilder::append(u8 value) { append_impl(*this, value, "%" PRIu8); }
-void StringBuilder::append(u16 value) { append_impl(*this, value, "%" PRIu8); }
-void StringBuilder::append(u32 value) { append_impl(*this, value, "%" PRIu8); }
-void StringBuilder::append(u64 value) { append_impl(*this, value, "%" PRIu8); }
+void StringBuilder::append(u16 value) { append_impl(*this, value, "%" PRIu16); }
+void StringBuilder::append(u32 value) { append_impl(*this, value, "%" PRIu32); }
+void StringBuilder::append(u64 value) { append_impl(*this, value, "%" PRIu64); }
 
 #define PRIf32 "f"
 #define PRIf64 "f"
