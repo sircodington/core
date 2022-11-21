@@ -63,8 +63,10 @@ void Files::write_completely(StringView file_path, StringView contents)
     auto file = fopen(zero_terminated_file_path.data(), "wb");
     assert(file);
 
-    auto count = fwrite(contents.data(), contents.size(), 1, file);
-    assert(count == 1);
+    if (contents.non_empty()) {
+        auto count = fwrite(contents.data(), contents.size(), 1, file);
+        assert(count == 1);
+    }
 
     assert(not fclose(file));
 }
