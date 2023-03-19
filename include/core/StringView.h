@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2021, Jan Sladek <keddelzz@web.de>
+// Copyright (c) 2021-2023, Jan Sladek <keddelzz@web.de>
 //
 // SPDX-License-Identifier: BSD-2-Clause
 //
@@ -7,6 +7,7 @@
 #pragma once
 
 #include <cassert>
+#include <cstring>
 
 #include <core/Formatter.h>
 #include <core/Types.h>
@@ -16,26 +17,40 @@ namespace core {
 class StringView
 {
 public:
-    StringView();
-    StringView(const char *data, s64 size = -1);
+    constexpr StringView()
+        : StringView({}, nullptr, 0)
+    {
+    }
 
-    [[nodiscard]] const char *data() const { return m_data; }
-    [[nodiscard]] char *data() { return const_cast<char *>(m_data); }
-    [[nodiscard]] Size size() const { return m_size; }
-    [[nodiscard]] bool is_empty() const { return size() == 0; }
-    [[nodiscard]] bool non_empty() const { return not is_empty(); }
-    [[nodiscard]] const char &at(Index index) const
+    template<size_t N>
+    constexpr StringView(const char (&data)[N])
+        : StringView({}, &data[0], N - 1)
+    {
+    }
+
+    constexpr StringView(const char *data, s64 size = -1)
+        : m_data(const_cast<char *>(data))
+        , m_size(data ? (size > -1 ? size : strlen(data)) : 0)
+    {
+    }
+
+    [[nodiscard]] constexpr const char *data() const { return m_data; }
+    [[nodiscard]] constexpr char *data() { return const_cast<char *>(m_data); }
+    [[nodiscard]] constexpr Size size() const { return m_size; }
+    [[nodiscard]] constexpr bool is_empty() const { return size() == 0; }
+    [[nodiscard]] constexpr bool non_empty() const { return not is_empty(); }
+    [[nodiscard]] constexpr const char &at(Index index) const
     {
         assert(index < size());
         return *(data() + index);
     }
-    [[nodiscard]] char &at(Index index)
+    [[nodiscard]] constexpr char &at(Index index)
     {
         assert(index < size());
         return *(data() + index);
     }
-    inline const char &operator[](Index index) const { return at(index); }
-    inline char &operator[](Index index) { return at(index); }
+    constexpr const char &operator[](Index index) const { return at(index); }
+    constexpr char &operator[](Index index) { return at(index); }
 
     bool operator==(const StringView &other) const;
     bool operator!=(const StringView &other) const
@@ -63,6 +78,12 @@ public:
     void replace(char c, char replacement);
 
 private:
+    constexpr StringView(bool, const char *data, u64 size)
+        : m_data(const_cast<char *>(data))
+        , m_size(size)
+    {
+    }
+
     char *m_data { nullptr };
     Size m_size { 0 };
 };
