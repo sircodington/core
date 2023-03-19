@@ -95,6 +95,7 @@ String StringBuilder::to_string()
 
         case Memory::Heap: {
             String string(m_data, m_size);
+            m_capacity = InlineCapacity;
             m_size = 0;
             m_data = m_storage;
             m_memory = Memory::Inline;
