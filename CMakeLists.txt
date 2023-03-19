@@ -21,6 +21,7 @@ set(${PROJECT_NAME}_HEADERS
     include/core/Plugin.h
     include/core/RingBuffer.h
     include/core/Set.h
+    include/core/SourceLocation.h
     include/core/StopWatch.h
     include/core/String.h
     include/core/StringBuilder.h
@@ -35,6 +36,7 @@ set(${PROJECT_NAME}_SOURCES
     src/LexicalFile.cpp
     src/Files.cpp
     src/Plugin.cpp
+    src/SourceLocation.cpp
     src/StopWatch.cpp
     src/String.cpp
     src/StringBuilder.cpp
